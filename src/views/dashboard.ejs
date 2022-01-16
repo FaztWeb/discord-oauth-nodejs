@@ -1,0 +1,13 @@
+<%- include('partials/header') -%>
+
+<h1>Dashboard</h1>
+
+<p><%- user.username %></p>
+
+<% guilds.forEach((guild) => { %>
+  <%- include('partials/guild', { guild }) -%>
+<% }) %>
+
+<a href="/auth/logout">logout</a>
+
+<%- include('partials/footer') -%>
