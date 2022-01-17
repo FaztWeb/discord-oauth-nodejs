@@ -1,5 +1,6 @@
-const {connect} = require('mongoose')
+const { connect } = require("mongoose");
+const { MONGODB_URI } = require("./config");
 
-
-connect('mongodb://localhost/discordapp')
-  .then(db => console.log(db.connection.name))
+connect(MONGODB_URI)
+  .then((db) => console.log(db.connection.name))
+  .catch((err) => console.error(error));

@@ -1,20 +1,12 @@
-require("dotenv").config();
 const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
 const path = require("path");
 const MongoStore = require("connect-mongo");
-const mongoose = require("mongoose");
-
-require("./strategies/discordStrategy");
-require("./db");
+const { SECRET, MONGODB_URI } = require("./config");
 
 const app = express();
-
-const PORT = process.env.PORT || 3000;
-const authRoutes = require("./routes/index");
-const dashboardRoutes = require("./routes/dashboard");
-const { isNotAuthorized } = require("./utils/auth");
+require("./strategies/discordStrategy");
 
 // Settings
 app.set("view engine", "ejs");
@@ -23,7 +15,7 @@ app.set("views", path.join(__dirname, "views"));
 // Middlewares
 app.use(
   session({
-    secret: "some random string",
+    secret: SECRET,
     cookie: {
       maxAge: 60000 * 60 * 24, // 1 day
       // secure: true
@@ -32,7 +24,7 @@ app.use(
     resave: false,
     name: "fazt-discord-oauth2",
     store: MongoStore.create({
-      mongoUrl: "mongodb://localhost/discordapp",
+      mongoUrl: MONGODB_URI,
     }),
   })
 );
@@ -46,10 +38,8 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use("/auth", authRoutes);
-app.use("/dashboard", dashboardRoutes);
+app.use("/", require("./routes/index.routes"));
+app.use("/auth", require("./routes/auth.routes"));
+app.use("/dashboard", require("./routes/dashboard.routes"));
 
-app.get("/", isNotAuthorized, (req, res) => res.render("home"));
-
-app.listen(PORT);
-console.log("Listening on port", PORT);
+module.exports = app;

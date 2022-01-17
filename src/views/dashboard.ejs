@@ -1,13 +1,16 @@
 <%- include('partials/header') -%>
 
-<h1>Dashboard</h1>
+<main class="bg-dark">
+  <div class="container text-light">
+    <h1>Dashboard</h1>
 
-<p><%- user.username %></p>
+    <p><%- user.username %>, these are your server</p>
 
-<% guilds.forEach((guild) => { %>
-  <%- include('partials/guild', { guild }) -%>
-<% }) %>
-
-<a href="/auth/logout">logout</a>
+    <div class="row">
+      <% guilds.forEach((guild) => { %> <%- include('partials/guild', { guild })
+      -%> <% }) %>
+    </div>
+  </div>
+</main>
 
 <%- include('partials/footer') -%>

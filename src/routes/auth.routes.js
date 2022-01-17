@@ -7,14 +7,13 @@ router.get("/", passport.authenticate("discord"));
 router.get(
   "/redirect",
   passport.authenticate("discord", {
-    failureRedirect: "/forbidden",
+    failureRedirect: "/", //other you could use are /forbiddent,/failure, etc
     successRedirect: "/dashboard",
   })
 );
 
 router.get("/logout", (req, res) => {
   if (req.user) req.logout();
-
   res.redirect("/");
 });
 

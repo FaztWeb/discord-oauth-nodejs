@@ -1,29 +1,41 @@
-<div>
-  <% if (guild.icon.substring(0,2) === 'a_') { %>
-  <img
-    src="https://cdn.discordapp.com/icons/<%= guild.id %>/<%= guild.icon%>.gif"
-    alt=""
-    class="rounded-circle"
-  />
-  <% } else { %>
-  <img
-    src="https://cdn.discordapp.com/icons/<%= guild.id %>/<%= guild.icon%>.png"
-    alt=""
-    class="rounded-circle"
-  />
-  <% } %>
+<div class="col-md-3 p-2">
+  <div class="card card-body text-light" style="background-color: #121212;">
+    <div class="d-flex justify-content-between mb-2">
+      <% if (guild.icon.substring(0,2) === 'a_') { %>
+      <img
+        src="https://cdn.discordapp.com/icons/<%= guild.id %>/<%= guild.icon%>.gif"
+        alt=""
+        class="rounded-circle w-25 h-25"
+      />
+      <% } else { %>
+      <img
+        src="https://cdn.discordapp.com/icons/<%= guild.id %>/<%= guild.icon%>.png"
+        alt=""
+        class="rounded-circle w-25 h-25"
+      />
+      <% } %>
 
-  <h1>
-    <%= guild.name %> <% if (guild.owner) { %>
-    <span>owner</span>
-    <% } %>
-  </h1>
+      <div>
+        <h1 class="h6">
+          <%= guild.name %> <% if (guild.owner) { %>
+          <span class="badge bg-success">owner</span>
+          <% } %>
+        </h1>
 
-  <p><%= guild.id %></p>
+        <p><%= guild.id %></p>
+        <button data-bs-toggle="collapse" data-bs-target="<%= '#collapse' + guild.id %>" class="btn btn-primary btn-sm">
+          Features
+        </button>
+      </div>
+    </div>
 
-  <ul>
-    <% guild.features.forEach(feature => { %>
-    <li><%= feature %></li>
-    <% })%>
-  </ul>
+
+    <div class="collapse" id="<%= 'collapse' + guild.id %>">
+    <ul>
+      <% guild.features.forEach(feature => { %>
+      <li><%= feature %></li>
+      <% })%>
+    </ul>
+</div>
+  </div>
 </div>
